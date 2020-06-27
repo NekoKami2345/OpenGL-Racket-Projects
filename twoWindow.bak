@@ -1,0 +1,17 @@
+#lang racket/gui
+(require opengl
+         opengl/util)
+(define frame (new frame% [label "win1"]
+                          [width 200]
+                          [height 200]))
+(define frame2 (new frame% [label "win2"]
+                           [width 200]
+                           [height 200]))
+(define msg (new message% [parent frame]
+                          [label "no events so far..."]))
+(new button% [parent frame2]
+             [label "CLICK ME"]
+             [callback (lambda (button event)
+                         (send msg set-label "ubtton clicked"))])
+(send frame show #t)
+(send frame2 show #t)
