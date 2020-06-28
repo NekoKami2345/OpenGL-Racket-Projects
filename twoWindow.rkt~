@@ -36,7 +36,7 @@
             (glBufferData GL_ARRAY_BUFFER (* (f32vector-length list-vertices) (ctype-sizeof _float)) list-vertices GL_STATIC_DRAW)
             (glEnableVertexAttribArray 0)
             (glVertexAttribPointer 0 3 GL_FLOAT #f 0 0)
-            (glDrawArrays GL_TRIANGLES 0 (f32vector-length list-vertices))
+            (glDrawArrays GL_TRIANGLES 0 3)
             (swap-gl-buffers)
             )
         )
@@ -67,12 +67,6 @@
             )))
     (define/public (writeVBO)
         (write (u32vector-ref vbo 0)))
-
-    ;Method to write new points into the vertex buffer(for now just sets new list-vertices points
-    ;Passed points as strings
-    (define/public (set-points points)
-      (set! list-vertices (list->f32vector (map string->number (string-split points)))))
-    
     (super-instantiate () (style '(gl)))
     
     ;(with-gl-context
@@ -110,18 +104,20 @@
       )
   )
 
-(define edit-frame (new frame% [label "win2"]
+(define frame (new frame% [label "win1"]
+                          [width 200]
+                          [height 200]))
+(define frame2 (new frame% [label "win2"]
                            [width 200]
                            [height 200]))
-(new button% [parent edit-frame]
+(define msg (new message% [parent frame]
+                          [label "no events so far..."]))
+(new button% [parent frame2]
              [label "CLICK ME"]
              [callback (lambda (button event)
-                         (send gl set-points (send point-text get-text)))])
-
-(define points-canvas (new editor-canvas%
-                           (parent edit-frame)
-                           (label "Point Editor")))
-(define point-text (new text%))
-(send points-canvas set-editor point-text)
-
-(send edit-frame show #t)
+                         (send gl genVAO)
+                         (send gl writeVAO)
+                         (send gl genVBO)
+                         (send gl writeVBO))])
+(send frame show #t)
+(send frame2 show #t)
