@@ -1,0 +1,1 @@
+("7.6" racket ("84df5b3743741e8167a15203f88afc2ce63731f2" . "7d9e59c17df62447e8fe0586825392bff0ec1b1a") (collects #"errortrace" #"errortrace-key.rkt") (collects #"ffi" #"unsafe" #"define.rkt") (collects #"ffi" #"unsafe.rkt") (collects #"ffi" #"vector.rkt") (collects #"racket" #"gui" #"lang" #"reader.rkt") (collects #"racket" #"gui.rkt") (collects #"racket" #"runtime-config.rkt"))

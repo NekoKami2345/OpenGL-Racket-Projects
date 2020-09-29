@@ -1,0 +1,31 @@
+#lang racket/gui
+(require ffi/vector
+         ffi/unsafe
+         ffi/unsafe/define)
+
+(provide get-list-by-tag)
+
+;Function to return a list of all items labelled with value in file
+(define (read-all file value)
+  ;Recursive helper function
+  (define (read-all-help acc)
+   (let ([line (read-line file 'any)])
+     ;End on EOF
+     ;continue with expanded acc on value
+     ;continue with anything else
+     (cond [(eof-object? line) (list->f32vector (flatten acc))]
+           [(equal? (car (string-split line)) value)
+              (read-all-help (cons (map string->number (cdr (string-split line))) acc))]
+           [else (read-all-help acc)]
+           )
+     )
+  )
+  ;Actually call the function
+  (read-all-help '())
+)
+
+;Call read-all with a given value and file. Mainly added to do the call-with-input-file
+(define (get-list-by-tag value file)
+  (call-with-input-file file
+    (lambda(in)
+      (read-all in value))))

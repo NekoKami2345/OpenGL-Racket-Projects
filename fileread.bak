@@ -1,0 +1,8 @@
+#lang racket/gui
+
+(define (read-all file)
+  (let ([line (read-line file 'any)])
+    (unless (eof-object? line)
+      (displayln line)
+      (read-all file))))
+(call-with-input-file "objs\rock.obj" read-all)

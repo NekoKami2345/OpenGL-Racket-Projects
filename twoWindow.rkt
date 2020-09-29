@@ -73,7 +73,7 @@
     (define/public (set-points points)
       (set! list-vertices (list->f32vector (map string->number (string-split points)))))
     
-    (super-instantiate () (style '(gl)))
+    (super-instantiate [] [style '(gl)])
     
     ;(with-gl-context
     ;    (lambda ()
@@ -109,6 +109,7 @@
         )
       )
   )
+
 
 (define edit-frame (new frame% [label "win2"]
                            [width 200]
